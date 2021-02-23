@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SampleSwagger.Models;
 
 namespace SampleSwagger.Controllers
 {
@@ -35,5 +36,27 @@ namespace SampleSwagger.Controllers
             })
             .ToArray();
         }
+
+
+        /// <summary>
+        /// Returns the day of the week
+        /// </summary>
+        /// <param name="numberDay">The numeric value for the day requested.</param>
+        /// <returns>The available days to book the appointment.</returns>
+        [HttpGet("weekdays")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TheDayOfTheWeek>))]
+        public IActionResult DaysOfWeek(int numberDay)
+        {
+            List<TheDayOfTheWeek> days = new List<TheDayOfTheWeek>();
+            days.Add(new TheDayOfTheWeek { Name = "Monday", Number = 1 });
+            days.Add(new TheDayOfTheWeek { Name = "Tuesday", Number = 2 });
+            if(numberDay < 1)
+            {
+                return BadRequest("Invalid value");
+            }
+            return Ok(days);
+        }
+
+        
     }
 }
